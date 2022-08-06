@@ -135,3 +135,51 @@ AND title NOT LIKE '%analyst%' AND title NOT LIKE '%analytics%'
 AND title NOT LIKE '%ANALYST%' AND title NOT LIKE '%analytics%';
 
 --Question 12b Answer: Tableau
+
+/*BONUS
+You want to understand which jobs requiring SQL are hard to fill. 
+Disregard any postings where the domain is NULL.
+Order your results so that the domain with the greatest number of hard to fill jobs is at the top.*/
+
+SELECT *
+FROM data_analyst_jobs; 
+
+--Part 1: Find the number of jobs by industry (domain) that require SQL and have been posted longer than 3 weeks.
+
+SELECT DISTINCT(domain), days_since_posting, COUNT (title) AS title
+FROM data_analyst_jobs
+WHERE domain NOT LIKE '[null]' AND skill = 'SQL' AND days_since_Posting >= 22
+GROUP BY domain, days_since_posting
+ORDER BY title DESC;
+
+--Part 1 Answer: 11
+
+--Part 2: Which three industries are in the top 4 on this list?
+
+SELECT DISTINCT(domain), days_since_posting, COUNT (title) AS title
+FROM data_analyst_jobs
+WHERE domain NOT LIKE '[null]' AND skill = 'SQL' AND days_since_Posting >= 22
+GROUP BY domain, days_since_posting
+ORDER BY title DESC
+LIMIT 4; 
+
+/*Part 2 Answer:
+1. Consulting and Business Services
+2. Consumer Goods and Services
+3. Computers and Electronics*/
+
+--Part 3: How many jobs have been listed for more than 3 weeks for each of the top 4?
+
+SELECT DISTINCT(domain), days_since_posting, COUNT (title) AS title
+FROM data_analyst_jobs
+WHERE domain NOT LIKE '[null]' AND skill = 'SQL' AND days_since_Posting >= 22
+GROUP BY domain, days_since_posting
+ORDER BY title DESC
+LIMIT 4; 
+
+/*Part 3 Answer:
+1. Consulting and Business Services - 5
+2. Consumer Goods and Services - 2
+3. Computers and Electronics - 1*/
+
+--FINISHED
